@@ -16,10 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const description = document.getElementById("description-task").value;
     const dueDate = form.elements["date"].value;
 
-    // Вставить код для создания задачи, тут ваще не пон, хуйня не гуглится
-    const taskContainer = document.createElement("task-card");
-    const taskTask = taskCreate.querySelector(tasks);
-    taskTask.forEach()
+    // Вставить код для создания задачи, тут ваще не пон, хуйня не гуглится (закомментированный код скорее всего неправильный)
+    // const taskContainer = document.createElement("task-card");
+    // const taskTask = taskCreate.querySelector(tasks);
+    // taskTask.forEach()
+    
   });
   // =========================================================================
 
@@ -40,30 +41,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // =========================================================================
-function renderTaskElement() {
+function renderTaskElement() {};
   // Вставить код рендера задачи
-  const taskContainer = document.querySelector(".task-item");
+  // const taskContainer = document.querySelector(".task-item");
 
-  tasks.forEach((task) => {
-    const taskCard = document.createElement("task");
-    taskCard.className = `task-item_info task-item_info--${task.id}`;
-    taskCard.innerHTML = `
-      <div class="task-item">
-        <div class="task-item_title">${title}</div>
-        <div class="task-item_description">${description}</div>
-        <div class="task-item_client">${dueDate}</div>
-      </div>
-    `;
+  // tasks.forEach((task) => {
+  //   const taskCard = document.createElement("task");
+  //   taskCard.className = `task-item_info task-item_info--${task.id}`;
+  //   taskCard.innerHTML = `
+  //     <div class="task-item">
+  //       <div class="task-item_title">${title}</div>
+  //       <div class="task-item_description">${description}</div>
+  //       <div class="task-item_client">${dueDate}</div>
+  //     </div>
+  //   `;
 // нужны ли тут эти строки?
-    const listTask = taskCard.querySelector(".task-item");
-    task.tasks.forEach((taskId) => {
-      const task= tasks.find((task) => task.id === taskID);
-      if (task) {
-        listTask.appendChild(renderTaskElement(task));
-      }
-    return task;
-  });
-})};
+  //   const listTask = taskCard.querySelector(".task-item");
+  //   task.tasks.forEach((taskId) => {
+  //     const task= tasks.find((task) => task.id === taskID);
+  //     if (task) {
+  //       listTask.appendChild(renderTaskElement(task));
+  //     }
+  //   return task;
+  // });
+// })};
 // =========================================================================
 
 function renderKanban() {
