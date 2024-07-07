@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // код будет работать только после загрузки всего документа
   renderKanban();
 
   const addTaskButtons = document.querySelectorAll(".kanban__icon--add");
@@ -16,7 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const dueDate = form.elements["date"].value;
 
     // Вставить код для создания задачи
-    
+    document.createElement("task-card") {
+
+    }
     
   });
   // =========================================================================
@@ -40,8 +43,28 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================================================================
 function renderTaskElement() {
   // Вставить код рендера задачи
-  const taskCard = 
-};
+  const taskContainer = document.querySelector(".task-item");
+
+  tasks.forEach((task) => {
+    const taskCard = document.createElement("task");
+    taskCard.className = `task-item_info task-item_info--${task.id}`;
+    taskCard.innerHTML = `
+      <div class="task-item">
+        <div class="task-item_title">${title}</div>
+        <div class="task-item_description">${description}</div>
+        <div class="task-item_client">${dueDate}</div>
+      </div>
+    `;
+// нужны или тут эти строки?
+  //   const listTask = taskCard.querySelector(".task-item");
+  //   task.tasks.forEach((taskId) => {
+  //     const task= tasks.find((task) => task.id === taskID);
+  //     if (task) {
+  //       listTask.appendChild(renderTaskElement(task));
+  //     }
+  //   return task;
+  // });
+})};
 // =========================================================================
 
 function renderKanban() {
@@ -61,6 +84,7 @@ function renderKanban() {
           <div class="kanban__list"></div>
         `;
 
+
     const listContainer = columnSection.querySelector(".kanban__list");
     column.tasks.forEach((taskId) => {
       const task = tasks.find((task) => task.id === taskId);
@@ -71,5 +95,5 @@ function renderKanban() {
 
     kanbanContainer.appendChild(columnSection);
   });
-}
+};
 
