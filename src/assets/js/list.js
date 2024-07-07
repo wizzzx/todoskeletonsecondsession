@@ -4,6 +4,7 @@ const columns = [
     title: "Задачи",
     icon: "./src/assets/img/kanban/kanban__column--to-do.svg",
     tasks: [
+      // обращение по айдишникам к массиву задач, т.е. связываю два массива между собой
       1, 2
     ]
   },
