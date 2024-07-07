@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // const taskContainer = document.createElement("task-card");
     // const taskTask = taskCreate.querySelector(tasks);
     // taskTask.forEach()
-    
   });
   // =========================================================================
 
@@ -56,14 +55,14 @@ function renderTaskElement() {};
   //     </div>
   //   `;
 // нужны ли тут эти строки?
-  //   const listTask = taskCard.querySelector(".task-item");
-  //   task.tasks.forEach((taskId) => {
-  //     const task= tasks.find((task) => task.id === taskID);
-  //     if (task) {
-  //       listTask.appendChild(renderTaskElement(task));
-  //     }
-  //   return task;
-  // });
+    const listTask = taskCard.querySelector(".task-item");
+    task.tasks.forEach((taskId) => {
+      const task= tasks.find((task) => task.id === taskID);
+      if (task) {
+        listTask.appendChild(renderTaskElement(task));
+      }
+    return task;
+  });
 // })};
 // =========================================================================
 
