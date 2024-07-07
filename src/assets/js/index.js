@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const dueDate = form.elements["date"].value;
 
     // Вставить код для создания задачи
+    
+    
   });
   // =========================================================================
 
@@ -38,7 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================================================================
 function renderTaskElement() {
   // Вставить код рендера задачи
-}
+  const taskCard = 
+};
 // =========================================================================
 
 function renderKanban() {
@@ -62,10 +65,11 @@ function renderKanban() {
     column.tasks.forEach((taskId) => {
       const task = tasks.find((task) => task.id === taskId);
       if (task) {
-        // listContainer.appendChild(renderTaskElement(task));
+        listContainer.appendChild(renderTaskElement(task));
       }
     });
 
     kanbanContainer.appendChild(columnSection);
   });
 }
+
