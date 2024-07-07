@@ -1,0 +1,58 @@
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 540px;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+
+
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+
+    .kanban__column {
+        flex: 0 0 calc(33.333% - 20px);
+    }
+}
+
+@media screen and (max-width: 992px) {
+
+    .kanban {
+        width: 100%;
+        flex-wrap: wrap;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .kanban__column {
+        width: 100%;
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}

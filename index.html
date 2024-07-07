@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./src/assets/css/index.css">
+  <title>To-Do-List-Kanban</title>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header__container">
+      <h1 class="header__title">Kanban Board</h1>
+      <div class="header__option">
+        <img src="./src/assets/img/header/plus.svg" alt="header__icon--add" class="header__icon header__icon--add">
+        <div class="header__user-icon">К.П</div>
+      </div>
+    </div>
+    <div>
+
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="kanban" id="app">
+
+    </div>
+
+    <div class="modal"> 
+      <div class="modal__container">
+        <a href="#" class="close-modal">✖</a> 
+        <form>
+          <input type="text" id="title-task" name="title" placeholder="Введите заголовок задачи"/>
+          <textarea id="description-task" name="description" placeholder="Введите описание задачи"></textarea>
+          <input type="date" name="date" placeholder="Выберите дату"/>
+          <button type="submit">Отправить</button>
+          <button type="button" class="cancel-button">Отмена</button> 
+        </form>
+      </div>
+    </div>
+    
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">To-Do-List-Kanban</p>
+  </footer>
+</body>
+<script src="./src/assets/js/index.js"></script>
+<script src="./src/assets/js/list.js"></script>
+</html>
