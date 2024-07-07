@@ -16,11 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const description = document.getElementById("description-task").value;
     const dueDate = form.elements["date"].value;
 
-    // Вставить код для создания задачи
-    document.createElement("task-card") {
-
-    }
-    
+    // Вставить код для создания задачи, тут ваще не пон, хуйня не гуглится
+    const taskContainer = document.createElement("task-card");
+    const taskTask = taskCreate.querySelector(tasks);
+    taskTask.forEach()
   });
   // =========================================================================
 
@@ -55,15 +54,15 @@ function renderTaskElement() {
         <div class="task-item_client">${dueDate}</div>
       </div>
     `;
-// нужны или тут эти строки?
-  //   const listTask = taskCard.querySelector(".task-item");
-  //   task.tasks.forEach((taskId) => {
-  //     const task= tasks.find((task) => task.id === taskID);
-  //     if (task) {
-  //       listTask.appendChild(renderTaskElement(task));
-  //     }
-  //   return task;
-  // });
+// нужны ли тут эти строки?
+    const listTask = taskCard.querySelector(".task-item");
+    task.tasks.forEach((taskId) => {
+      const task= tasks.find((task) => task.id === taskID);
+      if (task) {
+        listTask.appendChild(renderTaskElement(task));
+      }
+    return task;
+  });
 })};
 // =========================================================================
 
