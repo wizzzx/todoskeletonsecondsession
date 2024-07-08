@@ -1,6 +1,6 @@
 
 let currentColumnId = null;
-// нужна чтобы пушить новые таски в массив
+// нужна чтобы пушить новые таски в массив, также для отображение задачи в нужной колонке
 document.addEventListener("DOMContentLoaded", () => {
   // код будет работать только после загрузки всего документа
   renderKanban();
@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addTaskButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       const columnId = e.target.dataset.columnId;
+      // dataset считываем дата атрибут data-column-id
       currentColumnId = columnId;
       //присваиваем переменной значение тут, а выполняется она выше
       modal.style.display = "flex";
@@ -71,17 +72,19 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================================================================
 function renderTaskElement(task) {
   const element = document.createElement('div');
+  
   element.className = `task-item_info task-item_info--${task.id}`;
+  // узнать что делает эта конструкция
   element.innerHTML = `
     <div class="task-item">
-      <div class="task-item_title">${task.title}</div>
-      <div class="task-item_description">${task.description}</div>
-      <div class="task-item_client">${task.dueDate}</div>
+        <div class="task-item__title">${task.title}</div>
+        <div class="task-item__description">${task.description}</div>
+        <div class="task-item__client">${task.dueDate}</div>
+        <div class="complexity__dot">${task.complexity}</div>
     </div>
-  ` // по принципу рендер канбан
+  ` // по принципу рендер канбан (не совсем)
 
   return element;
-  // нужно ли тут возвращать элемент? вроде работает
 };
   // Вставить код рендера задачи (неправильно, но оставлю для истории)
   // const taskContainer = document.querySelector(".task-item");
@@ -100,6 +103,7 @@ function renderTaskElement(task) {
 
 
 function renderKanban() {
+  // функция вызывается при загрузке документа (выше)
   const kanbanContainer = document.querySelector(".kanban");
 
   columns.forEach((column) => {
@@ -114,8 +118,7 @@ function renderKanban() {
             <img data-column-id="${column.id}" src="./src/assets/img/kanban/plus.svg" alt="Добавить задачу" class="kanban__icon kanban__icon--add">
           </div>
           <div class="kanban__list"></div>
-        `;
-
+        `; // добавил строчку сюда, привязал колумн айди к кнопке "добавить задачу", чтобы отображалось в правильной колонке
 
     const listContainer = columnSection.querySelector(".kanban__list");
 

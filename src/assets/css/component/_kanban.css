@@ -5,7 +5,7 @@
     gap: 40px;
     margin: 10px 0;
 }
-
+ 
 .kanban__column {
     display: flex;
     flex-direction: column;
