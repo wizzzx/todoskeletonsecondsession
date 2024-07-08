@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // закрыть окно после нажатия "submit"
     const currentColumnDomElement = document.querySelector(`.kanban__column--${currentColumnId}`);
 // не уврен что именно делает конструкция "--", допустим объединяет класс со свойством объекта массива
+// на самом деле она связывает класс и js код внутри, наверное?
     const kanbanListCurrentColumn = currentColumnDomElement.querySelector('.kanban__list')
     kanbanListCurrentColumn.appendChild(renderTaskElement(newTask))
 
@@ -72,18 +73,17 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================================================================
 function renderTaskElement(task) {
   const element = document.createElement('div');
-  
   element.className = `task-item_info task-item_info--${task.id}`;
-  // узнать что делает эта конструкция
+  // узнать что именно делает эта конструкция
   element.innerHTML = `
     <div class="task-item">
         <div class="task-item__title">${task.title}</div>
         <div class="task-item__description">${task.description}</div>
         <div class="task-item__client">${task.dueDate}</div>
-        <div class="complexity__dot">${task.complexity}</div>
+        <div class="complexity__dot"></div>
     </div>
   ` // по принципу рендер канбан (не совсем)
-
+  
   return element;
 };
   // Вставить код рендера задачи (неправильно, но оставлю для истории)
