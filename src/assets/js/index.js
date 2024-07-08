@@ -1,6 +1,6 @@
 
 let currentColumnId = null;
-
+// нужна чтобы пушить новые таски в массив
 document.addEventListener("DOMContentLoaded", () => {
   // код будет работать только после загрузки всего документа
   renderKanban();
@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = document.getElementById("title-task").value;
     const description = document.getElementById("description-task").value;
     const dueDate = form.elements["date"].value;
-
-
+  
+    // Вставить код для создания задачи, тут ваще не пон, хуйня не гуглится (закомментированный код скорее всего неправильный)
     const newTask = {
-      // generate new id
+      // нужно как то генерить уникальный айдишник у новых задач, узнать
       id: 2,
       title: title,
       description:description,
@@ -34,20 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
     tasks.push(newTask);
+    // пушим в массив новый объект
     const currentColumn = columns.find(col => col.id == currentColumnId);
     currentColumn.tasks.push(newTask.id)
-
+// ищем в массиве колумнс объекты по айдишникам
     modal.style.display = 'none';
-
+// закрыть окно после нажатия "submit"
     const currentColumnDomElement = document.querySelector(`.kanban__column--${currentColumnId}`);
-
+// не уврен что именно делает конструкция "--", допустим объединяет класс со свойством объекта массива
     const kanbanListCurrentColumn = currentColumnDomElement.querySelector('.kanban__list')
-    
     kanbanListCurrentColumn.appendChild(renderTaskElement(newTask))
 
-    // Вставить код для создания задачи, тут ваще не пон, хуйня не гуглится (закомментированный код скорее всего неправильный)
-    // const taskContainer = document.createElement("task-card");
-    // const taskTask = taskCreate.querySelector(tasks);
     
   });
   // =========================================================================
@@ -56,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", (e) => {
       const columnId = e.target.dataset.columnId;
       currentColumnId = columnId;
+      //присваиваем переменной значение тут, а выполняется она выше
       modal.style.display = "flex";
     });
   });
@@ -80,11 +78,12 @@ function renderTaskElement(task) {
       <div class="task-item_description">${task.description}</div>
       <div class="task-item_client">${task.dueDate}</div>
     </div>
-  `
+  ` // по принципу рендер канбан
 
   return element;
+  // нужно ли тут возвращать элемент? вроде работает
 };
-  // Вставить код рендера задачи
+  // Вставить код рендера задачи (неправильно, но оставлю для истории)
   // const taskContainer = document.querySelector(".task-item");
 
   // tasks.forEach((task) => {
@@ -97,16 +96,6 @@ function renderTaskElement(task) {
       //   <div class="task-item_client">${dueDate}</div>
       // </div>
   //   `;
-// нужны ли тут эти строки?
-  //   const listTask = taskCard.querySelector(".task-item");
-  //   task.tasks.forEach((taskId) => {
-  //     const task= tasks.find((task) => task.id === taskID);
-  //     if (task) {
-  //       listTask.appendChild(renderTaskElement(task));
-  //     }
-  //   return task;
-  // });
-// })};
 // =========================================================================
 
 
@@ -139,7 +128,7 @@ function renderKanban() {
     // todo col -> tasks
     column.tasks.forEach((taskId) => {
       const task = tasks.find((task) => task.id === taskId);
-
+      //=== строгое сравнение, чтобы по типам совпадало
       if (task) {
         listContainer.appendChild(renderTaskElement(task));
       }
