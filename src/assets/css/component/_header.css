@@ -31,3 +31,8 @@ header {
     justify-content: center;
     font-weight: 600;
 }
+
+.header__icon--add:hover {
+    cursor: pointer;
+    opacity: .5;
+}

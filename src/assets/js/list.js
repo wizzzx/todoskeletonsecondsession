@@ -3,18 +3,13 @@ const columns = [
     id: "to-do",
     title: "Задачи",
     icon: "./src/assets/img/kanban/kanban__column--to-do.svg",
-    tasks: [
-      // обращение по айдишникам к массиву задач, т.е. связываю два массива между собой
-      // можно удалить в принципе
-      
-    ]
+    tasks: []
   },
   {
     id: "in-progress",
     title: "В процессе",
     icon: "./src/assets/img/kanban/kanban__column--in-progress.svg",
-    tasks: [
-    ]
+    tasks: []
   },
   {
     id: "done",
