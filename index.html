@@ -18,22 +18,32 @@
       </div>
     </div>
     <div>
-
     </div>
   </header>
 
   <main class="container">
     <div class="kanban" id="app"></div>
-
-    <div class="modal"> 
+    <div class="modal task-modal">
       <div class="modal__container">
-        <a href="#" class="close-modal">✖</a> 
+        <a href="#" class="close-modal">✖</a>
         <form>
-          <input type="text" id="title-task" name="title" placeholder="Введите заголовок задачи"/>
+          <input type="hidden" id="task-id">
+          <input type="text" id="title-task" name="title" placeholder="Введите заголовок задачи" />
           <textarea id="description-task" name="description" placeholder="Введите описание задачи"></textarea>
-          <input type="date" name="date" placeholder="Выберите дату"/>
+          <input type="date" name="date" id="due-date" placeholder="Выберите дату" />
           <button type="submit">Отправить</button>
-          <button type="button" class="cancel-button">Отмена</button> 
+          <button type="button" class="cancel-button">Отмена</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal column-modal">
+      <div class="modal__container">
+        <a href="#" class="close-modal">✖</a>
+        <form id="column-form">
+          <input type="text" id="column-title" name="title" placeholder="Введите название колонки" />
+          <button type="submit">Создать</button>
+          <button type="button" class="cancel-button">Отмена</button>
         </form>
       </div>
     </div>
@@ -45,4 +55,5 @@
 </body>
 <script src="./src/assets/js/index.js"></script>
 <script src="./src/assets/js/list.js"></script>
+
 </html>

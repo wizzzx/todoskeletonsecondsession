@@ -1,81 +1,121 @@
-
 let currentColumnId = null;
+let currentTaskId = null;
+
 document.addEventListener("DOMContentLoaded", () => {
   renderKanban();
 
   const addTaskButtons = document.querySelectorAll(".kanban__icon--add");
-  const modal = document.querySelector(".modal");
-  const closeModalButton = document.querySelector(".close-modal");
-  const cancelButton = document.querySelector(".cancel-button");
-  const form = document.querySelector(".modal form");
-  const addIcon = document.querySelectorAll(".header_icon--add");
+  const taskModal = document.querySelector(".task-modal");
+  const columnModal = document.querySelector(".column-modal");
+  const closeModalButtons = document.querySelectorAll(".close-modal");
+  const cancelButtons = document.querySelectorAll(".cancel-button");
+  const taskForm = document.querySelector(".task-modal form");
+  const columnForm = document.querySelector("#column-form");
+  const addIcon = document.querySelector(".header__icon--add");
 
-  form.addEventListener("submit", (event) => {
+  taskForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const title = document.getElementById("title-task").value;
     const description = document.getElementById("description-task").value;
-    const dueDate = form.elements["date"].value;
-    const newTask = {
-      id: 2,
+    const dueDate = document.getElementById("due-date").value;
+    const taskId = document.getElementById("task-id").value;
+
+    if (taskId) {
+      const task = tasks.find(t => t.id == taskId);
+      task.title = title;
+      task.description = description;
+      task.dueDate = dueDate;
+      renderKanban();
+    } else {
+      const newTask = {
+        id: tasks.length ? Math.max(...tasks.map(t => t.id)) + 1 : 1,
+        title: title,
+        description: description,
+        complexity: "high",
+        dueDate: dueDate,
+        columnId: currentColumnId
+      };
+      tasks.push(newTask);
+      const currentColumn = columns.find(col => col.id == currentColumnId);
+      currentColumn.tasks.push(newTask.id);
+      renderKanban();
+    }
+
+    taskModal.style.display = 'none';
+  });
+
+  columnForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const title = document.getElementById("column-title").value;
+    const newColumnId = columns.length ? Math.max(...columns.map(col => col.id)) + 1 : 1;
+    const newColumn = {
+      id: newColumnId,
       title: title,
-      description:description,
-      complexity: "high",
-      dueDate: dueDate,
-      columnId: currentColumnId
-  }
-    tasks.push(newTask);
-    const currentColumn = columns.find(col => col.id == currentColumnId);
-    currentColumn.tasks.push(newTask.id)
-    modal.style.display = 'none';
-    const currentColumnDomElement = document.querySelector(`.kanban__column--${currentColumnId}`);
-    const kanbanListCurrentColumn = currentColumnDomElement.querySelector('.kanban__list')
-    kanbanListCurrentColumn.appendChild(renderTaskElement(newTask))
+      icon: "./src/assets/img/kanban/kanban__column--default.svg",
+      tasks: []
+    };
+    columns.push(newColumn);
+    renderKanban();
+    columnModal.style.display = 'none';
   });
 
   addTaskButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       const columnId = e.target.dataset.columnId;
       currentColumnId = columnId;
-      modal.style.display = "flex";
+      document.getElementById("task-id").value = '';
+      document.getElementById("title-task").value = '';
+      document.getElementById("description-task").value = '';
+      document.getElementById("due-date").value = '';
+      taskModal.style.display = "flex";
     });
   });
 
-  closeModalButton.addEventListener("click", () => {
-    modal.style.display = "none";
+  closeModalButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      taskModal.style.display = "none";
+      columnModal.style.display = "none";
+    });
   });
 
-  cancelButton.addEventListener("click", () => {
-    modal.style.display = "none";
+  cancelButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      taskModal.style.display = "none";
+      columnModal.style.display = "none";
+    });
   });
 
-  addIcon.forEach((icon) => {
-    icon.addEventListener("click", () => {
-      const newColumnId = columns.lenght ? Math.max(...columns.map(col => col.id)) + 1 : 1;
-      const newColumn = {
-        id: newColumnId,
-        title: `На согласовании ${newColumnId}`,
-        icon: "./src/css/img/kanban/kanban_column--on-comfirmation.svg",
-        tasks: []
-      };
-      columns.push(newColumn);
-      renderKanban();
-    })
-  })
+  addIcon.addEventListener("click", () => {
+    columnModal.style.display = "flex";
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("edit-button")) {
+      const taskId = e.target.dataset.taskId;
+      currentTaskId = taskId;
+      const task = tasks.find(t => t.id == taskId);
+      document.getElementById("task-id").value = task.id;
+      document.getElementById("title-task").value = task.title;
+      document.getElementById("description-task").value = task.description;
+      document.getElementById("due-date").value = task.dueDate;
+      taskModal.style.display = "flex";
+    }
+  });
 });
-
 
 function renderTaskElement(task) {
   const element = document.createElement('div');
   element.className = `task-item_info task-item_info--${task.id}`;
   element.innerHTML = `
     <div class="task-item">
-        <div class="task-item__title">${task.title}</div>
-        <div class="task-item__description">${task.description}</div>
-        <div class="task-item__client">${task.dueDate}</div>
-        <div class="complexity__dot"></div>
-    </div>`
+      <div class="task-item__title">${task.title}</div>
+      <div class="task-item__description">${task.description}</div>
+      <div class="task-item__client">${task.dueDate}</div>
+      <div class="complexity__dot"></div>
+      <button class="edit-button" data-task-id="${task.id}">Редактировать</button>
+    </div>`;
   return element;
-};
+}
 
 function renderKanban() {
   const kanbanContainer = document.querySelector(".kanban");
@@ -84,22 +124,22 @@ function renderKanban() {
     const columnSection = document.createElement("section");
     columnSection.className = `kanban__column kanban__column--${column.id}`;
     columnSection.innerHTML = `
-          <div class="kanban__header">
-            <div class="kanban__header-content">
-              <img src="${column.icon}" alt="Колонка ${column.title}" class="kanban__icon kanban__icon--column">
-              <h2 class="kanban__title">${column.title}</h2>
-            </div>
-            <img data-column-id="${column.id}" src="./src/assets/img/kanban/plus.svg" alt="Добавить задачу" class="kanban__icon kanban__icon--add">
-          </div>
-          <div class="kanban__list"></div>`;
+      <div class="kanban__header">
+        <div class="kanban__header-content">
+          <img src="${column.icon}" alt="Колонка ${column.title}" class="kanban__icon kanban__icon--column">
+          <h2 class="kanban__title">${column.title}</h2>
+        </div>
+        <img data-column-id="${column.id}" src="./src/assets/img/kanban/plus.svg" alt="Добавить задачу" class="kanban__icon kanban__icon--add">
+      </div>
+      <div class="kanban__list"></div>`;
     const listContainer = columnSection.querySelector(".kanban__list");
     column.tasks.forEach((taskId) => {
       const task = tasks.find((task) => task.id === taskId);
       if (task) {
-        listContainer.appendChild(renderTaskElement(task));
+        const taskElement = renderTaskElement(task);
+        listContainer.appendChild(taskElement);
       }
     });
     kanbanContainer.appendChild(columnSection);
   });
-};
-
+}
