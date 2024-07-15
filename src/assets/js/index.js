@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
       renderKanban();
     } else {
       const newTask = {
-        id: tasks.length ? Math.max(...tasks.map(t => t.id)) + 1 : 1,
+        id: tasks.length ? Math.max(...tasks.map(t => t.id)) + 1 : 1, // генер уникальный айди, в инете подсмотрел
+    
         title: title,
         description: description,
         complexity: "high",
