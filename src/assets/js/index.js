@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       tasks.push(newTask);
       const currentColumn = columns.find(col => col.id == currentColumnId);
+      console.log(currentColumnId);
+      console.log(columns);
       currentColumn.tasks.push(newTask.id);
       renderKanban();
     }
@@ -48,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   columnForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const title = document.getElementById("column-title").value;
-    const newColumnId = columns.length ? Math.max(...columns.map(col => col.id)) + 1 : 1;
+    const newColumnId = String(columns.length + 1);
     const newColumn = {
       id: newColumnId,
       title: title,
@@ -56,21 +58,27 @@ document.addEventListener("DOMContentLoaded", () => {
       tasks: []
     };
     columns.push(newColumn);
-    renderKanban();
+    const kanbanContainer = document.querySelector(".kanban");
+    kanbanContainer.appendChild(renderColumn(newColumn));
+    initAddTaskHandlers();
     columnModal.style.display = 'none';
   });
 
-  addTaskButtons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      const columnId = e.target.dataset.columnId;
-      currentColumnId = columnId;
-      document.getElementById("task-id").value = '';
-      document.getElementById("title-task").value = '';
-      document.getElementById("description-task").value = '';
-      document.getElementById("due-date").value = '';
-      taskModal.style.display = "flex";
+  function initAddTaskHandlers() {
+    document.querySelectorAll(".kanban__icon--add").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const columnId = e.target.dataset.columnId;
+        currentColumnId = columnId;
+        document.getElementById("task-id").value = '';
+        document.getElementById("title-task").value = '';
+        document.getElementById("description-task").value = '';
+        document.getElementById("due-date").value = '';
+        taskModal.style.display = "flex";
+      });
     });
-  });
+  };
+  
+  initAddTaskHandlers();
 
   closeModalButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -106,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function renderTaskElement(task) {
   const element = document.createElement('div');
-  element.className = `task-item_info task-item_info--${task.id}`;
+  element.className = `task-item_info--${task.id}`;
   element.innerHTML = `
     <div class="task-item">
       <div class="task-item__title">${task.title}</div>
@@ -116,13 +124,10 @@ function renderTaskElement(task) {
       <button class="edit-button" data-task-id="${task.id}">Редактировать</button>
     </div>`;
   return element;
-}
+};
 
-function renderKanban() {
-  const kanbanContainer = document.querySelector(".kanban");
-  kanbanContainer.innerHTML = '';
-  columns.forEach((column) => {
-    const columnSection = document.createElement("section");
+function renderColumn(column) {
+  const columnSection = document.createElement("section");
     columnSection.className = `kanban__column kanban__column--${column.id}`;
     columnSection.innerHTML = `
       <div class="kanban__header">
@@ -133,6 +138,14 @@ function renderKanban() {
         <img data-column-id="${column.id}" src="./src/assets/img/kanban/plus.svg" alt="Добавить задачу" class="kanban__icon kanban__icon--add">
       </div>
       <div class="kanban__list"></div>`;
+      return columnSection;
+};
+
+function renderKanban() {
+  const kanbanContainer = document.querySelector(".kanban");
+  kanbanContainer.innerHTML = '';
+  columns.forEach((column) => {
+    const columnSection = renderColumn(column);
     const listContainer = columnSection.querySelector(".kanban__list");
     column.tasks.forEach((taskId) => {
       const task = tasks.find((task) => task.id === taskId);
@@ -143,4 +156,4 @@ function renderKanban() {
     });
     kanbanContainer.appendChild(columnSection);
   });
-}
+};
